@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filmsOperations } from '../../redux';
 import s from './AddFilmForm.module.css';
@@ -58,7 +58,9 @@ const AddFilmForm = () => {
     setActorName('');
   };
 
-  console.log(actors);
+  const handleActorDelete = index => {
+    setActors(actors.filter(actor => actors.indexOf(actor) !== index));
+  };
 
   return (
     <div>
@@ -118,21 +120,28 @@ const AddFilmForm = () => {
             Add an actor
           </button>
         </label>
-        <h3 className={s.title}>Actors you have added to this film</h3>
+        {actors.length !== 0 ? (
+          <h3 className={s.title}>Actors you have added to this film</h3>
+        ) : (
+          <p className={s.prompt}>
+            You need to enter at least one actor to proceed
+          </p>
+        )}
         <ul className={s.list}>
-          {actors &&
-            actors.map((actor, index) => (
-              <li key={index} className={s.item}>
-                <p className={s.text}>{actor}</p>
-                <button
-                  type="button"
-                  className={s.del_btn}
-                  // onClick={() => actors.splice(index, 1)}
-                >
-                  Delete this actor
-                </button>
-              </li>
-            ))}
+          {actors.map((actor, index) => (
+            <li key={index} className={s.item}>
+              <p className={s.text}>{actor}</p>
+              <button
+                type="button"
+                className={s.del_btn}
+                onClick={() => {
+                  handleActorDelete(index);
+                }}
+              >
+                Delete this actor
+              </button>
+            </li>
+          ))}
         </ul>
         <button type="submit" className={s.button} disabled={isDisabled}>
           Add film

@@ -36,6 +36,11 @@
   align-items: center;
 }
 
+.prompt {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .text {
   margin-right: 10px;
 }

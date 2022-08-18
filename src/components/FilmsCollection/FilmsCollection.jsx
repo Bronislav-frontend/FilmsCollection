@@ -57,12 +57,6 @@ const FilmsCollection = () => {
               <h2 className={s.film_title}>'{title}'</h2>
               <p>Year: {year}</p>
               <p>Format: {format}</p>
-              <button
-                className={s.btn}
-                onClick={() => dispatch(filmsOperations.deleteFilm(id))}
-              >
-                Delete from collection
-              </button>
             </li>
           ))}
       </ul>

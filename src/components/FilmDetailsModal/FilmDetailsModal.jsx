@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { filmsOperations } from '../../redux';
 import closeImg from '../../assets/cancel.svg';
 import s from './FilmDetails.module.css';
 
 const FilmDetailsModal = ({ filmInfo, onClose }) => {
-  console.log(filmInfo);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.addEventListener('keydown', onKeyDown);
@@ -41,6 +43,15 @@ const FilmDetailsModal = ({ filmInfo, onClose }) => {
                 </li>
               ))}
           </ul>
+          <button
+            className={s.btn}
+            onClick={() => {
+              dispatch(filmsOperations.deleteFilm(filmInfo.id));
+              onClose();
+            }}
+          >
+            Delete from collection
+          </button>
         </div>
         <img
           className={s.close_icon}

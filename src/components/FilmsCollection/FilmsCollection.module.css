@@ -52,12 +52,3 @@
   height: 32px;
   font-size: medium;
 }
-
-.btn {
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  color: rgb(161, 6, 6);
-  margin-top: 10px;
-  padding: 8px;
-}
