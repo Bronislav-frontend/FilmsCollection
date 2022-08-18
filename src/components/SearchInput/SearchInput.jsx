@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { filmsOperations } from '../../redux';
 import s from './SearchInput.module.css';
@@ -16,13 +17,17 @@ const SearchInput = () => {
 
   const onKeyDown = e => {
     if (e.code === 'Enter') {
-      dispatch(filmsOperations.fetchFilmsList(`search=${searchWord}`));
+      dispatch(filmsOperations.fetchFilmsList(`search=${searchWord.trim('')}`));
+      setSearchWord('');
     }
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(filmsOperations.fetchFilmsList(`search=${searchWord}`));
+    if (searchWord.trim('') === '') return toast.warn('Enter something');
+    e.preventDefault();
+    dispatch(filmsOperations.fetchFilmsList(`search=${searchWord.trim('')}`));
+    setSearchWord('');
   };
 
   return (

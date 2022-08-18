@@ -18,7 +18,6 @@ const register = createAsyncThunk('films/register', async credentials => {
     token.set(data.token);
     return data;
   } catch (error) {
-    console.log(credentials);
     return credentials.rejectWithValue(error);
   }
 });
@@ -29,7 +28,6 @@ const logIn = createAsyncThunk('films/login', async credentials => {
     token.set(data.token);
     return data;
   } catch (error) {
-    console.log(error);
     return credentials.rejectWithValue(error);
   }
 });

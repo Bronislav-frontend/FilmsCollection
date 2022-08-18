@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { filmsOperations } from '../../redux';
 import s from './AddFilmForm.module.css';
@@ -18,10 +19,13 @@ const AddFilmForm = () => {
   const [actorName, setActorName] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const handleChange = ({ target: { name, value } }) => {
+  useEffect(() => {
     title && year && format && actors.length > 0
       ? setIsDisabled(false)
       : setIsDisabled(true);
+  }, [title, year, format, actors.length]);
+
+  const handleChange = ({ target: { name, value } }) => {
     switch (name) {
       case 'title':
         return setTitle(value);
@@ -46,8 +50,8 @@ const AddFilmForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (actors.length === 0 || year < 1950 || year > 2022) {
-      return;
+    if (year < 1950 || year > 2022) {
+      return toast.warn('possible year can be between 1950 and 2022');
     }
     dispatch(filmsOperations.createFilm({ title, year, format, actors }));
     resetValues();

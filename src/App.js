@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import { lazy } from 'react';
 import { Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Loader from './components/Loader/Loader';
 import PublicRoute from './components/Routes/PublicRoute';
 import PrivateRoute from './components/Routes/PrivateRoute';
@@ -12,25 +14,28 @@ const HomeView = lazy(() => import('./views/HomeView/HomeView'));
 
 function App() {
   return (
-    <Switch>
-      <Suspense fallback={<Loader />}>
-        <PublicRoute exact path="/" restricted redirectTo="/login">
-          <HomeView />
-        </PublicRoute>
+    <>
+      <Switch>
+        <Suspense fallback={<Loader />}>
+          <PublicRoute exact path="/">
+            <HomeView />
+          </PublicRoute>
 
-        <PublicRoute exact path="/register" restricted redirectTo="/login">
-          <RegisterView />
-        </PublicRoute>
+          <PublicRoute exact path="/register" restricted redirectTo="/login">
+            <RegisterView />
+          </PublicRoute>
 
-        <PublicRoute exact path="/login" restricted redirectTo="/films">
-          <LogInView />
-        </PublicRoute>
+          <PublicRoute exact path="/login" restricted redirectTo="/films">
+            <LogInView />
+          </PublicRoute>
 
-        <PrivateRoute path="/films" redirectTo="/login">
-          <FilmsView />
-        </PrivateRoute>
-      </Suspense>
-    </Switch>
+          <PrivateRoute exact path="/films" redirectTo="/login">
+            <FilmsView />
+          </PrivateRoute>
+        </Suspense>
+      </Switch>
+      <ToastContainer />
+    </>
   );
 }
 
