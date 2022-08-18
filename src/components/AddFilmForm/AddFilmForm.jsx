@@ -20,7 +20,7 @@ const AddFilmForm = () => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    title && year && format && actors.length > 0
+    title && title.trim('') !== '' && year && format && actors.length > 0
       ? setIsDisabled(false)
       : setIsDisabled(true);
   }, [title, year, format, actors.length]);
@@ -51,13 +51,16 @@ const AddFilmForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (year < 1950 || year > 2022) {
-      return toast.warn('possible year can be between 1950 and 2022');
+      return toast.warn('possible years are between 1950 and 2022');
     }
     dispatch(filmsOperations.createFilm({ title, year, format, actors }));
     resetValues();
   };
 
   const handleActorSubmit = () => {
+    if (actorName.trim('') === '') {
+      return toast.warn(`Enter actor's name or lastname `);
+    }
     setActors([...actors, actorName]);
     setActorName('');
   };
@@ -114,7 +117,7 @@ const AddFilmForm = () => {
             value={actorName}
             onChange={handleChange}
             className={s.input}
-            placeholder="Actors"
+            placeholder="Actor's name"
           />
           <button
             type="button"
