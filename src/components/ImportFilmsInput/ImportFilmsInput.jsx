@@ -7,7 +7,6 @@ const ImportFilmsInput = () => {
   const dispatch = useDispatch();
   const [isDisabled, setIsDisabled] = useState(true);
   const formData = new FormData();
-  console.log(formData);
 
   const handleSubmit = e => {
     e.preventDefault();

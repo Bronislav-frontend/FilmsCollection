@@ -34,8 +34,12 @@ const FilmsCollection = () => {
         </p>
       )}
       <div className={s.sort}>
-        <p>Sort by</p>
-        <select name="sortBy" onChange={e => setSortBy(e.target.value)}>
+        <p className={s.text}>Sort by</p>
+        <select
+          name="sortBy"
+          onChange={e => setSortBy(e.target.value)}
+          className={s.select}
+        >
           <option value="year">Year</option>
           <option value="title">Title</option>
         </select>

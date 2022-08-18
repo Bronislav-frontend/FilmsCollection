@@ -7,7 +7,9 @@ const fetchFilmsList = createAsyncThunk(
   'fetchFilms',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`movies?${arg}&order=DESC&offset=0`);
+      const { data } = await axios.get(
+        `movies?${arg}&order=DESC&offset=0`,
+      );
       return { data };
     } catch (error) {
       return rejectWithValue(error.message);

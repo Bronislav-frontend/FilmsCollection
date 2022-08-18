@@ -37,6 +37,7 @@ const AddFilmForm = () => {
     setFormat('');
     setYear('');
     setActors([]);
+    setFormat('DVD');
   };
 
   const handleSubmit = e => {
