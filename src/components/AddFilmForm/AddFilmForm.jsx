@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filmsOperations } from '../../redux';
 import s from './AddFilmForm.module.css';
@@ -16,8 +16,12 @@ const AddFilmForm = () => {
   const [format, setFormat] = useState('DVD');
   const [actors, setActors] = useState([]);
   const [actorName, setActorName] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleChange = ({ target: { name, value } }) => {
+    title && year && format && actors.length > 0
+      ? setIsDisabled(false)
+      : setIsDisabled(true);
     switch (name) {
       case 'title':
         return setTitle(value);
@@ -53,6 +57,8 @@ const AddFilmForm = () => {
     setActors([...actors, actorName]);
     setActorName('');
   };
+
+  console.log(actors);
 
   return (
     <div>
@@ -121,14 +127,14 @@ const AddFilmForm = () => {
                 <button
                   type="button"
                   className={s.del_btn}
-                  onClick={() => actors.splice(index, 1)}
+                  // onClick={() => actors.splice(index, 1)}
                 >
                   Delete this actor
                 </button>
               </li>
             ))}
         </ul>
-        <button type="submit" className={s.button}>
+        <button type="submit" className={s.button} disabled={isDisabled}>
           Add film
         </button>
       </form>

@@ -6,11 +6,32 @@ import s from './ImportFilmsInput.module.css';
 const ImportFilmsInput = () => {
   const dispatch = useDispatch();
   const [isDisabled, setIsDisabled] = useState(true);
+  const [fileTypeError, setFileTypeError] = useState();
+  const [file, setFile] = useState();
   const formData = new FormData();
+
+  const handleChange = e => {
+    if (e.target.files[0] !== undefined) {
+      setFile(e.target.files[0]);
+      const fileType = e.target.files[0].name.split('.').pop();
+      if (fileType !== 'txt') {
+        setFileTypeError(fileType);
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+        setFileTypeError('');
+      }
+    } else {
+      setIsDisabled(true);
+    }
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
+    formData.append('movies', file, 'movies.txt');
     dispatch(filmsOperations.importFilms(formData));
+    setFile('');
+    setIsDisabled(true);
   };
 
   return (
@@ -18,12 +39,21 @@ const ImportFilmsInput = () => {
       <form onSubmit={handleSubmit} className={s.form}>
         <h2 className={s.title}>Or you can dowload .txt file</h2>
         <input
+          className={s.file_input}
           type="file"
-          onChange={e => {
-            formData.append('movies', e.target.files[0], 'movies.txt');
-            setIsDisabled(false);
-          }}
+          id="file"
+          onChange={e => handleChange(e)}
         />
+        <label htmlFor="file" className={s.file_label}>
+          Download your file
+        </label>
+        {file && <p className={s.file_name}>{file.name}</p>}
+        {fileTypeError && (
+          <p className={s.file_error}>
+            Your file format is .{fileTypeError}, you can dowload only .txt
+            files
+          </p>
+        )}
         <button type="submit" disabled={isDisabled} className={s.button}>
           Add films
         </button>

@@ -63,3 +63,8 @@
   border-radius: 50px;
   margin-top: 5px;
 }
+
+.button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}

@@ -27,3 +27,47 @@
   border-radius: 50px;
   margin-top: 5px;
 }
+
+.button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+.file_label {
+  text-align: center;
+}
+
+.file_input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file_input + .file_label {
+  font-size: 1.25em;
+  font-weight: 700;
+  background-color: rgb(249, 249, 249);
+  display: inline-block;
+  border-radius: 50px;
+  padding: 20px;
+}
+
+.file_input:focus + .file_label,
+.file_input + .file_label:hover {
+  background-color: aqua;
+}
+
+.file_name {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.file_error {
+  text-align: center;
+  margin-bottom: 5px;
+  color: rgb(153, 0, 0);
+}
