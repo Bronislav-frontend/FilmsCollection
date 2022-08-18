@@ -26,18 +26,22 @@ const FilmDetailsModal = ({ filmInfo, onClose }) => {
   return (
     <div className={s.backdrop} onClick={onBackdropClick}>
       <div className={s.modal}>
-        <h2>Title: {filmInfo.title}</h2>
-        <p>Year: {filmInfo.year}</p>
-        <p>Format: {filmInfo.format}</p>
-        <p>Cast:</p>
-        <ul>
-          {filmInfo.actors &&
-            filmInfo.actors.map(({ id, name }) => (
-              <li key={id}>
-                <p>{name}</p>
-              </li>
-            ))}
-        </ul>
+        <div>
+          <h2>Title: {filmInfo.title}</h2>
+          <p>Year: {filmInfo.year}</p>
+          <p>Format: {filmInfo.format}</p>
+        </div>
+        <div className={s.cast}>
+          <h3>Cast:</h3>
+          <ul>
+            {filmInfo.actors &&
+              filmInfo.actors.map(({ id, name }) => (
+                <li key={id}>
+                  <p>{name}</p>
+                </li>
+              ))}
+          </ul>
+        </div>
         <img
           className={s.close_icon}
           src={closeImg}
