@@ -54,7 +54,7 @@ const FilmsCollection = () => {
                 width="140px"
                 height="100px"
               ></img>
-              <h2 className={s.film_title}>'{title}'</h2>
+              <h2 className={s.film_title}>{title}</h2>
               <p>Year: {year}</p>
               <p>Format: {format}</p>
             </li>
