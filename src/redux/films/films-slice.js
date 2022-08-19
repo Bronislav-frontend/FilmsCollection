@@ -12,7 +12,7 @@ const filmsSlice = createSlice({
   initialState,
   extraReducers: {
     [filmsOperations.fetchFilmsList.fulfilled](state, { payload }) {
-      payload.data.data.length === 0
+      payload?.data.data.length === 0
         ? toast.error('Sorry, I have not found any film')
         : toast.success(
             `${payload.data.data.length} films of your collection were downloaded`,
@@ -31,6 +31,12 @@ const filmsSlice = createSlice({
       state.filmsArray = state.filmsArray.filter(({ id }) => id !== payload);
     },
     [filmsOperations.createFilm.fulfilled](state, { payload }) {
+      if (payload.status === 0) {
+        toast.error(
+          `Occured an error while adding film: ${payload.error.code}`,
+        );
+        return;
+      }
       toast.success('YEY, you added a new film!');
       state.filmsArray = [payload.data, ...state.filmsArray];
     },
