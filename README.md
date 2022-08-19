@@ -27,7 +27,7 @@ Done! The site you were looking for is right in front of you! Hope you gonna
 enjoy it:)
 
 P.S. during to the specs of an API in this project I
-didn`t made rehydration of a token and user name, last name, because there is no endpoint to fetch current user,
-maybe there is the way to implement it by a different way, but I don`t know it (yet),
-so don`t refresh the page, cause your browser will throw you to Homepage and you will have to sign in again:) 
-the "refresh" button is the one red button, that mustn`t be touched!
+didn`t made rehydration of a token and user name, last name, because there is no endpoint to fetch current user, maybe there is the way to implement it by a different way, but I don`t
+know it (yet), so
+don`t refresh the page, cause your browser will throw you to Homepage and you will have to sign in again:) the "refresh" button is the one red button, that mustn`t
+be touched!
