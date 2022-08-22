@@ -12,23 +12,23 @@ const filmsSlice = createSlice({
   initialState,
   extraReducers: {
     [filmsOperations.fetchFilmsList.fulfilled](state, { payload }) {
-      payload?.data.data.length === 0
-        ? toast.error('Sorry, I have not found any film')
-        : toast.success(
-            `${payload.data.data.length} films of your collection were downloaded`,
-          );
+      payload?.data.data.length === 0 &&
+        toast.error('Sorry, I have not found any film');
       state.filmsArray = payload.data.data;
     },
     [filmsOperations.importFilms.fulfilled](state, { payload }) {
+      if (payload.status === 0) {
+        toast.error(
+          `Occured an error while importing film: ${payload.error.code}`,
+        );
+        return;
+      }
       toast.success('YEY, file successfully imported');
-      return {
-        ...state,
-        filmsArray: payload.data,
-      };
+      state.filmsArray = [...state.filmsArray, ...payload.data];
     },
     [filmsOperations.deleteFilm.fulfilled](state, { payload }) {
       toast.success('You have deleted choosen film from your collection');
-      state.filmsArray = state.filmsArray.filter(({ id }) => id !== payload);
+      state.filmsArray = payload.data;
     },
     [filmsOperations.createFilm.fulfilled](state, { payload }) {
       if (payload.status === 0) {
@@ -38,6 +38,7 @@ const filmsSlice = createSlice({
         return;
       }
       toast.success('YEY, you added a new film!');
+      state.filmsArray.pop();
       state.filmsArray = [payload.data, ...state.filmsArray];
     },
     [filmsOperations.showFilm.fulfilled](state, { payload }) {

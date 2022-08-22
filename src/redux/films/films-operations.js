@@ -34,7 +34,10 @@ const deleteFilm = createAsyncThunk(
   async (filmId, { rejectWithValue }) => {
     try {
       await axios.delete(`movies/${filmId}`);
-      return filmId;
+      const { data } = await axios.get(
+        `movies?sort=year&order=DESC&limit=20&offset=0`,
+      );
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

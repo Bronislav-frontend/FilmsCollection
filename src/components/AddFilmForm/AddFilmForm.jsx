@@ -50,8 +50,8 @@ const AddFilmForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (year < 1950 || year > 2022) {
-      return toast.warn('possible years are between 1950 and 2022');
+    if (year < 1950 || year > 2021) {
+      return toast.warn('possible years are between 1950 and 2021');
     }
     dispatch(filmsOperations.createFilm({ title, year, format, actors }));
     resetValues();

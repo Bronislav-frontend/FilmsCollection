@@ -17,6 +17,9 @@ const SearchInput = () => {
 
   const onKeyDown = e => {
     if (e.code === 'Enter') {
+      if (searchWord.trim('') === '') return toast.warn('Enter something');
+      if (searchWord.length === 1)
+        return toast.warn('Search must contain more then 1 symbol');
       dispatch(filmsOperations.fetchFilmsList(`search=${searchWord.trim('')}`));
       setSearchWord('');
     }
@@ -25,7 +28,8 @@ const SearchInput = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (searchWord.trim('') === '') return toast.warn('Enter something');
-    e.preventDefault();
+    if (searchWord.length === 1)
+      return toast.warn('Search must contain more then 1 symbol');
     dispatch(filmsOperations.fetchFilmsList(`search=${searchWord.trim('')}`));
     setSearchWord('');
   };
@@ -41,6 +45,15 @@ const SearchInput = () => {
       />
       <button type="submit" className={s.btn} onClick={handleSubmit}>
         Search
+      </button>
+      <button
+        className={s.back}
+        type="button"
+        onClick={() => {
+          dispatch(filmsOperations.fetchFilmsList(`sort=year`));
+        }}
+      >
+        <p>Main page</p>
       </button>
     </label>
   );

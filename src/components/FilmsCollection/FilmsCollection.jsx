@@ -12,7 +12,7 @@ const FilmsCollection = () => {
   const [isModalShown, setIsModalShown] = useState(false);
   const dispatch = useDispatch();
   const films = useSelector(selectors.getFilms);
-  const filmDetails = useSelector(state => state.films.film);
+  const filmDetails = useSelector(selectors.getFilmDetails);
 
   useEffect(() => {
     dispatch(filmsOperations.fetchFilmsList(`sort=${sortBy}`));
@@ -46,17 +46,21 @@ const FilmsCollection = () => {
       </div>
       <ul className={s.list}>
         {films &&
-          films.map(({ id, title, year, format }) => (
-            <li key={id} className={s.item} onClick={() => handleClick(id)}>
+          films.map((film, index) => (
+            <li
+              key={index}
+              className={s.item}
+              onClick={() => handleClick(film.id)}
+            >
               <img
                 src={filmImage}
                 alt="default poster"
                 width="140px"
                 height="100px"
               ></img>
-              <h2 className={s.film_title}>{title}</h2>
-              <p>Year: {year}</p>
-              <p>Format: {format}</p>
+              <h2 className={s.film_title}>{film.title}</h2>
+              <p>Year: {film.year}</p>
+              <p>Format: {film.format}</p>
             </li>
           ))}
       </ul>

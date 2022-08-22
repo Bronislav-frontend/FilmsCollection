@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filmsOperations } from '../../redux';
 import closeImg from '../../assets/cancel.svg';
@@ -6,6 +6,7 @@ import s from './FilmDetails.module.css';
 
 const FilmDetailsModal = ({ filmInfo, onClose }) => {
   const dispatch = useDispatch();
+  const [isConfirmShown, setIsConfirmShown] = useState(false);
 
   useEffect(() => {
     window.addEventListener('keydown', onKeyDown);
@@ -25,6 +26,7 @@ const FilmDetailsModal = ({ filmInfo, onClose }) => {
       onClose();
     }
   };
+
   return (
     <div className={s.backdrop} onClick={onBackdropClick}>
       <div className={s.modal}>
@@ -43,13 +45,7 @@ const FilmDetailsModal = ({ filmInfo, onClose }) => {
                 </li>
               ))}
           </ul>
-          <button
-            className={s.btn}
-            onClick={() => {
-              dispatch(filmsOperations.deleteFilm(filmInfo.id));
-              onClose();
-            }}
-          >
+          <button className={s.btn} onClick={() => setIsConfirmShown(true)}>
             Delete from collection
           </button>
         </div>
@@ -59,6 +55,25 @@ const FilmDetailsModal = ({ filmInfo, onClose }) => {
           alt="close film's details"
           onClick={onClose}
         />
+        {isConfirmShown && (
+          <div className={s.confirm}>
+            <h2>
+              Are you sure you want to delete this movie: '{filmInfo.title}'?
+            </h2>
+            <button
+              className={s.btn}
+              onClick={() => {
+                dispatch(filmsOperations.deleteFilm(filmInfo.id));
+                onClose();
+              }}
+            >
+              Yes
+            </button>
+            <button className={s.btn} onClick={() => setIsConfirmShown(false)}>
+              No
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
